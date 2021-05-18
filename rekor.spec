@@ -23,19 +23,13 @@
 %global import_path %{provider}.%{provider_tld}/%{project}/%{repo}
 %global git0 https://%{import_path}
 
-# Used for comparing with latest upstream tag
-# to decide whether to autobuild and set download url (non-rawhide only)
-%define built_tag v0.1.1
-%define built_tag_strip %(b=%{built_tag}; echo ${b:1})
-%define download_url %{git0}/archive/%{built_tag}.tar.gz
-
 Name: rekor
 Version: 0.1.1
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Manage Pods, Containers and Container Images
 License: ASL 2.0
 URL: https://%{name}.io/
-Source0: %{download_url}
+Source0: %{git0}/archive/v%{version}.tar.gz
 BuildRequires: gcc
 BuildRequires: golang
 BuildRequires: glib2-devel
@@ -58,7 +52,7 @@ Summary: Rekor Server
 Rekor server
 
 %prep
-%autosetup -Sgit_am -n %{name}-%{built_tag_strip}
+%autosetup -Sgit_am -n %{name}-%{version}
 
 %build
 export CGO_CFLAGS='-O2 -g -grecord-gcc-switches -pipe -Wall -Werror=format-security -Wp,-D_FORTIFY_SOURCE=2 -specs=/usr/lib/rpm/redhat/redhat-hardened-cc1 -ffat-lto-objects -fexceptions -fasynchronous-unwind-tables -fstack-protector-strong -fstack-clash-protection -D_GNU_SOURCE -D_LARGEFILE_SOURCE -D_LARGEFILE64_SOURCE -D_FILE_OFFSET_BITS=64'
@@ -93,6 +87,9 @@ install -p %{name}-server %{buildroot}%{_bindir}
 %{_bindir}/%{name}-server
 
 %changelog
+* Tue May 18 2021 Lokesh Mandvekar <lsm5@fedoraproject.org> - 0.1.1-2
+- cleanup macros
+
 * Tue May 18 2021 Lokesh Mandvekar <lsm5@fedoraproject.org> - 0.1.1-1
 - initial package
 
