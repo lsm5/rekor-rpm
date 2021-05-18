@@ -25,8 +25,8 @@
 
 Name: rekor
 Version: 0.1.1
-Release: 2%{?dist}
-Summary: Manage Pods, Containers and Container Images
+Release: 3%{?dist}
+Summary: Signature Transparency Log
 License: ASL 2.0
 URL: https://%{name}.io/
 Source0: %{git0}/archive/v%{version}.tar.gz
@@ -87,6 +87,9 @@ install -p %{name}-server %{buildroot}%{_bindir}
 %{_bindir}/%{name}-server
 
 %changelog
+* Tue May 18 2021 Lokesh Mandvekar <lsm5@fedoraproject.org> - 0.1.1-3
+- Correct package summary
+
 * Tue May 18 2021 Lokesh Mandvekar <lsm5@fedoraproject.org> - 0.1.1-2
 - cleanup macros
 
